@@ -1,4 +1,9 @@
 {
+  "Navigation": {
+    "appName": "Votación de Imágenes IA",
+    "home": "Inicio",
+    "about": "Acerca de"
+  },
   "navigation": {
     "home": "Inicio",
     "admin": "Panel de Administración",
@@ -46,5 +51,18 @@
       "stats": "Obtener estadísticas detalladas",
       "export": "Exportar datos como CSV"
     }
+  },
+  "About": {
+    "pageTitle": "Acerca de - Votación de Imágenes IA",
+    "metaDescription": "Conoce al creador de la Aplicación de Comparación de Modelos de Imágenes IA",
+    "profileAlt": "Foto de perfil",
+    "name": "Tu Nombre",
+    "tagline": "Ingeniero de Software y Entusiasta de IA",
+    "bioTitle": "Sobre Este Proyecto",
+    "bioText": "Esta aplicación fue creada para proporcionar una plataforma imparcial para comparar imágenes generadas por IA de diferentes modelos. Al usar un algoritmo de equidad y anonimización completa de URL, aseguramos que los votos se basen puramente en la calidad de la imagen en lugar de la reputación del modelo.",
+    "connectTitle": "Conéctate Conmigo",
+    "linkedinUrl": "https://linkedin.com/in/yourprofile",
+    "mediumUrl": "https://medium.com/@yourprofile",
+    "githubUrl": "https://github.com/yourprofile"
   }
 }

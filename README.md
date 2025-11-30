@@ -20,6 +20,8 @@ A Next.js application for evaluating and voting on AI-generated images from diff
 - **Anonymous Images**: Images served via UUID-based API endpoints
 - **Session Tracking**: Cookie-based session management for vote tracking
 - **Admin Dashboard**: Protected analytics and data export interface
+- **Global Navigation**: Glassmorphism navigation bar with language switcher
+- **About Page**: Creator profile with bio and social media links
 
 ## Getting Started
 
@@ -160,6 +162,52 @@ To add support for a new language:
    ```bash
    npx tsx scripts/translate-openai.ts
    ```
+
+## Customizing the About Page
+
+The About page displays creator information and social media links. To customize it:
+
+### Update Profile Information
+
+Edit the translation files in `messages/`:
+
+**English (`messages/en.json`):**
+```json
+{
+  "About": {
+    "name": "Your Name",
+    "tagline": "Your Title/Tagline",
+    "bioText": "Your bio text here...",
+    "linkedinUrl": "https://linkedin.com/in/your-profile",
+    "mediumUrl": "https://medium.com/@your-profile",
+    "githubUrl": "https://github.com/your-username"
+  }
+}
+```
+
+**Spanish (`messages/es.json`):**
+```json
+{
+  "About": {
+    "name": "Tu Nombre",
+    "tagline": "Tu Título",
+    "bioText": "Tu biografía aquí...",
+    "linkedinUrl": "https://linkedin.com/in/tu-perfil",
+    "mediumUrl": "https://medium.com/@tu-perfil",
+    "githubUrl": "https://github.com/tu-usuario"
+  }
+}
+```
+
+### Update Profile Image
+
+Replace the profile image at `public/images/profile.svg` with your own image:
+
+1. Prepare your image (recommended: 256x256px, < 50KB)
+2. Save it as `public/images/profile.svg` (or `.jpg`, `.png`)
+3. If using a different format, update the image path in `app/[locale]/about/page.tsx`
+
+The component includes automatic fallback handling if the image fails to load.
 
 ## URL Anonymization
 
@@ -328,6 +376,7 @@ If deploying to other platforms:
 ├── app/                          # Next.js App Router pages
 │   ├── [locale]/                # Internationalized routes
 │   │   ├── p/[slug]/           # Dynamic prompt pages
+│   │   ├── about/              # About page with creator info
 │   │   ├── admin/              # Admin dashboard
 │   │   └── layout.tsx          # Locale-aware layout
 │   └── api/                     # API routes
@@ -338,6 +387,7 @@ If deploying to other platforms:
 ├── components/                   # React components
 │   ├── ImageGrid.tsx           # Voting interface
 │   ├── LanguageSwitcher.tsx    # i18n language selector
+│   ├── Navigation.tsx          # Global navigation bar
 │   ├── SessionManager.tsx      # Session cookie management
 │   └── VoteConfirmation.tsx    # Post-vote feedback
 ├── lib/                          # Utility functions

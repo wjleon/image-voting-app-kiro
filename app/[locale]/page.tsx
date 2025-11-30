@@ -13,6 +13,9 @@ export default async function Home({
   const { locale } = await params;
   const { exclude: excludeSlug } = await searchParams;
 
+  // Build where clause to exclude specific prompt if provided
+  const whereClause = excludeSlug ? { slug: { not: excludeSlug } } : {};
+
   // Get prompts with at least 4 images
   const validPrompts = await prisma.prompt.findMany({
     where: {

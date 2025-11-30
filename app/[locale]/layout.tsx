@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { Navigation } from '@/components/Navigation';
 
 export const metadata: Metadata = {
   title: 'AI Image Model Comparison',
@@ -49,10 +49,10 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider messages={messages} locale={locale}>
-          <div className="fixed top-4 right-4 z-50">
-            <LanguageSwitcher currentLocale={locale} />
+          <Navigation />
+          <div className="pt-16">
+            {children}
           </div>
-          {children}
         </NextIntlClientProvider>
       </body>
     </html>
