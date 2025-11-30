@@ -70,6 +70,87 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
+## Internationalization (i18n)
+
+The application supports multiple languages (English and Spanish) with automatic locale detection.
+
+### Supported Languages
+
+- **English (en)**: Default language
+- **Spanish (es)**: Fully supported with UI and prompt translations
+
+### How It Works
+
+1. **Automatic Locale Detection**: The app detects the user's preferred language from:
+   - Browser cookie (if previously set)
+   - Accept-Language header
+   - Falls back to English
+
+2. **Language Switcher**: Users can manually switch languages using the dropdown in the top-right corner
+
+3. **Localized URLs**: All pages use locale-prefixed URLs:
+   - English: `/en/...`
+   - Spanish: `/es/...`
+
+### Translation Management
+
+#### Generating Spanish Translations
+
+To translate all prompts to Spanish using OpenAI:
+
+1. Set your OpenAI API key in `.env`:
+   ```env
+   OPENAI_API_KEY="sk-..."
+   ```
+
+2. Run the translation script:
+   ```bash
+   npx tsx scripts/translate-openai.ts
+   ```
+
+#### Checking Translation Coverage
+
+To verify translation coverage:
+
+```bash
+npx tsx scripts/check-translations.ts
+```
+
+This will show:
+- Total prompts
+- Translated prompts
+- Missing translations
+- Coverage percentage
+
+#### Backfilling English Translations
+
+If you have existing prompts without English translations:
+
+```bash
+npx tsx scripts/backfill-english-translations.ts
+```
+
+### Adding New Languages
+
+To add support for a new language:
+
+1. Update `i18n.ts` to include the new locale:
+   ```typescript
+   export const locales = ['en', 'es', 'fr'] as const;
+   ```
+
+2. Create a new message file:
+   ```bash
+   cp messages/en.json messages/fr.json
+   ```
+
+3. Translate the UI strings in the new message file
+
+4. Run the translation script for prompts:
+   ```bash
+   npx tsx scripts/translate-openai.ts
+   ```
+
 ## Environment Variables
 
 The application requires the following environment variables:
@@ -87,6 +168,8 @@ The application requires the following environment variables:
 |----------|-------------|---------|
 | `NODE_ENV` | Node environment | `development` |
 | `NEXT_PUBLIC_APP_URL` | Base URL for the application | - |
+| `OPENAI_API_KEY` | OpenAI API key for translations | - |
+| `OPENAI_MODEL` | OpenAI model for translations | `gpt-3.5-turbo` |
 
 ### Environment Variable Validation
 

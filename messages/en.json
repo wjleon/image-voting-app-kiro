@@ -1,0 +1,50 @@
+{
+  "navigation": {
+    "home": "Home",
+    "admin": "Admin Dashboard",
+    "language": "Language"
+  },
+  "voting": {
+    "title": "Which image best matches this prompt?",
+    "instruction": "Click on the image you think best matches the prompt",
+    "instructionMobile": "Tap on the image you think best matches the prompt",
+    "loading": "Loading...",
+    "submitting": "Submitting your vote..."
+  },
+  "confirmation": {
+    "title": "Thanks for voting!",
+    "message": "Your vote helps us compare AI image models",
+    "nextButton": "Next Prompt",
+    "autoAdvance": "Auto-advancing in {seconds} seconds..."
+  },
+  "errors": {
+    "voteFailed": "Failed to submit vote. Please try again.",
+    "loadFailed": "Failed to load prompt.",
+    "noPrompts": "No Prompts Available",
+    "noPromptsMessage": "Please run the ingestion script to populate the database.",
+    "error": "Error"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "subtitle": "AI Image Voting Analytics",
+    "stats": {
+      "totalVotes": "Total Votes",
+      "totalImpressions": "Total Impressions",
+      "prompts": "Prompts",
+      "images": "Images"
+    },
+    "table": {
+      "title": "Model Performance",
+      "model": "Model",
+      "votes": "Votes",
+      "impressions": "Impressions",
+      "winRate": "Win Rate",
+      "ctr": "CTR"
+    },
+    "api": {
+      "title": "API Endpoints",
+      "stats": "Get detailed statistics",
+      "export": "Export data as CSV"
+    }
+  }
+}

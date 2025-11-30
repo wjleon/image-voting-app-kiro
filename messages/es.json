@@ -1,0 +1,50 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "admin": "Panel de Administración",
+    "language": "Idioma"
+  },
+  "voting": {
+    "title": "¿Qué imagen coincide mejor con este prompt?",
+    "instruction": "Haz clic en la imagen que creas que mejor coincide con el prompt",
+    "instructionMobile": "Toca la imagen que creas que mejor coincide con el prompt",
+    "loading": "Cargando...",
+    "submitting": "Enviando tu voto..."
+  },
+  "confirmation": {
+    "title": "¡Gracias por votar!",
+    "message": "Tu voto nos ayuda a comparar modelos de imágenes de IA",
+    "nextButton": "Siguiente Prompt",
+    "autoAdvance": "Avanzando automáticamente en {seconds} segundos..."
+  },
+  "errors": {
+    "voteFailed": "Error al enviar el voto. Por favor, inténtalo de nuevo.",
+    "loadFailed": "Error al cargar el prompt.",
+    "noPrompts": "No hay Prompts Disponibles",
+    "noPromptsMessage": "Por favor, ejecuta el script de ingesta para poblar la base de datos.",
+    "error": "Error"
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "subtitle": "Analíticas de Votación de Imágenes de IA",
+    "stats": {
+      "totalVotes": "Votos Totales",
+      "totalImpressions": "Impresiones Totales",
+      "prompts": "Prompts",
+      "images": "Imágenes"
+    },
+    "table": {
+      "title": "Rendimiento del Modelo",
+      "model": "Modelo",
+      "votes": "Votos",
+      "impressions": "Impresiones",
+      "winRate": "Tasa de Victoria",
+      "ctr": "CTR"
+    },
+    "api": {
+      "title": "Endpoints de API",
+      "stats": "Obtener estadísticas detalladas",
+      "export": "Exportar datos como CSV"
+    }
+  }
+}

@@ -181,6 +181,12 @@ ${challenges
     data: {
       text: ${JSON.stringify(challenge.promptText)},
       slug: ${JSON.stringify(challenge.slug)},
+      translations: {
+        create: {
+          language: 'en',
+          text: ${JSON.stringify(challenge.promptText)},
+        },
+      },
     },
   });
   console.log('✓ Created prompt: ${challenge.slug}');

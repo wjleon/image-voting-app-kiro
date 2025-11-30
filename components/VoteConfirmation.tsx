@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 /**
  * Props for VoteConfirmation component
@@ -18,6 +19,8 @@ interface VoteConfirmationProps {
  * @param autoAdvanceDelay - Optional delay before auto-advancing (ms)
  */
 export function VoteConfirmation({ onNext, autoAdvanceDelay = 3000 }: VoteConfirmationProps) {
+  const t = useTranslations();
+
   useEffect(() => {
     // Auto-advance after delay
     const timer = setTimeout(() => {
@@ -51,10 +54,10 @@ export function VoteConfirmation({ onNext, autoAdvanceDelay = 3000 }: VoteConfir
 
         {/* Message */}
         <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-900 dark:text-gray-100 mb-2">
-          Thanks for voting!
+          {t('confirmation.title')}
         </h2>
         <p className="text-sm sm:text-base text-center text-gray-600 dark:text-gray-400 mb-5 sm:mb-6">
-          Your vote helps us compare AI image models
+          {t('confirmation.message')}
         </p>
 
         {/* Next Button */}
@@ -62,12 +65,12 @@ export function VoteConfirmation({ onNext, autoAdvanceDelay = 3000 }: VoteConfir
           onClick={onNext}
           className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 sm:py-3.5 px-6 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2 touch-manipulation text-base sm:text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
         >
-          Next Prompt
+          {t('confirmation.nextButton')}
         </button>
 
         {/* Auto-advance indicator */}
         <p className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-3 sm:mt-4">
-          Auto-advancing in {autoAdvanceDelay / 1000} seconds...
+          {t('confirmation.autoAdvance', { seconds: autoAdvanceDelay / 1000 })}
         </p>
       </div>
     </div>

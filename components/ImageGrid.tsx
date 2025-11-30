@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { ModelName } from '@/types';
 
 /**
@@ -41,6 +42,7 @@ export function ImageGrid({
   sessionId,
   onVoteComplete,
 }: ImageGridProps) {
+  const t = useTranslations();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -77,7 +79,7 @@ export function ImageGrid({
       }
     } catch (err) {
       console.error('Error submitting vote:', err);
-      setError('Failed to submit vote. Please try again.');
+      setError(t('errors.voteFailed'));
       setIsSubmitting(false);
       setSelectedImageId(null);
     }
@@ -88,7 +90,7 @@ export function ImageGrid({
       {/* Prompt Text */}
       <div className="mb-6 sm:mb-8 lg:mb-10 text-center">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 px-2">
-          Which image best matches this prompt?
+          {t('voting.title')}
         </h1>
         <p className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto px-2">
           {promptText}
@@ -181,8 +183,8 @@ export function ImageGrid({
       {/* Instructions */}
       {!isSubmitting && (
         <p className="mt-4 sm:mt-6 text-center text-sm sm:text-base text-gray-500 dark:text-gray-400 px-4">
-          <span className="hidden sm:inline">Click</span>
-          <span className="sm:hidden">Tap</span> on the image you think best matches the prompt
+          <span className="hidden sm:inline">{t('voting.instruction')}</span>
+          <span className="sm:hidden">{t('voting.instructionMobile')}</span>
         </p>
       )}
     </div>

@@ -19,6 +19,12 @@ async function main() {
     data: {
       text: "Design a single presentation slide titled \"How This AI System Works\".\n\nLayout requirements:\n- A clear, readable main title at the top: \"How This AI System Works\"\n- A 3-step horizontal diagram in the center:\n  1) \"User Input\"\n  2) \"AI Processing\"\n  3) \"Smart Output\"\n- Each step represented by a simple icon and a short line of text beneath.\n- On the right side, a small box titled \"Key Benefits\" with 3 bullet points:\n  - \"Faster decisions\"\n  - \"Lower manual work\"\n  - \"Continuous learning\"\n\nVisual style:\n- Clean, modern slide design suitable for a tech conference.\n- Color palette: white background with accents in electric blue and charcoal grey.\n- Fonts should be simple and sans-serif.\n- Everything must be readable at typical presentation size.\n\nAspect ratio: 16:9.",
       slug: "chatgpt-7-slide",
+      translations: {
+        create: {
+          language: 'en',
+          text: "Design a single presentation slide titled \"How This AI System Works\".\n\nLayout requirements:\n- A clear, readable main title at the top: \"How This AI System Works\"\n- A 3-step horizontal diagram in the center:\n  1) \"User Input\"\n  2) \"AI Processing\"\n  3) \"Smart Output\"\n- Each step represented by a simple icon and a short line of text beneath.\n- On the right side, a small box titled \"Key Benefits\" with 3 bullet points:\n  - \"Faster decisions\"\n  - \"Lower manual work\"\n  - \"Continuous learning\"\n\nVisual style:\n- Clean, modern slide design suitable for a tech conference.\n- Color palette: white background with accents in electric blue and charcoal grey.\n- Fonts should be simple and sans-serif.\n- Everything must be readable at typical presentation size.\n\nAspect ratio: 16:9.",
+        },
+      },
     },
   });
   console.log('✓ Created prompt: chatgpt-7-slide');

@@ -11,14 +11,29 @@ datasource db {
 }
 
 model Prompt {
-  id        String   @id @default(uuid())
-  text      String
-  slug      String   @unique
-  images    Image[]
-  votes     Vote[]
-  createdAt DateTime @default(now())
+  id           String              @id @default(uuid())
+  text         String
+  slug         String              @unique
+  images       Image[]
+  votes        Vote[]
+  translations PromptTranslation[]
+  createdAt    DateTime            @default(now())
 
   @@map("prompts")
+}
+
+model PromptTranslation {
+  id        String   @id @default(uuid())
+  promptId  String
+  prompt    Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  language  String   // 'en' | 'es'
+  text      String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([promptId, language])
+  @@index([language])
+  @@map("prompt_translations")
 }
 
 model Image {

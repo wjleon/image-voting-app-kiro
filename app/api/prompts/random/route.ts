@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { selectFairImages } from '@/lib/fairness';
+import { getPromptTranslation } from '@/lib/translations';
 
 /**
  * Response schema for random prompt endpoint
@@ -21,11 +22,13 @@ interface RandomPromptResponse {
  * 
  * Query parameters:
  * - exclude: Optional slug to exclude from selection
+ * - locale: Optional locale for translated prompt text (defaults to 'en')
  */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const excludeSlug = searchParams.get('exclude');
+    const locale = searchParams.get('locale') || 'en';
 
     // Build where clause
     const whereClause = excludeSlug
@@ -76,19 +79,22 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Get translated prompt text
+    const translatedText = await getPromptTranslation(randomPrompt.id, locale);
+
     // Use fairness algorithm to select 4 images
     const selectedImages = await selectFairImages(prisma, randomPrompt.id, 4);
 
-    // Anonymize image URLs (don't expose model names)
+    // Anonymize image URLs (use API endpoint to hide model names)
     const candidates = selectedImages.map((image) => ({
       imageId: image.id,
-      imageUrl: image.imagePath, // Path is already anonymized in the database
+      imageUrl: `/api/image/${image.id}`,
     }));
 
     const response: RandomPromptResponse = {
       promptId: randomPrompt.id,
       promptSlug: randomPrompt.slug,
-      promptText: randomPrompt.text,
+      promptText: translatedText,
       candidates,
     };
 
