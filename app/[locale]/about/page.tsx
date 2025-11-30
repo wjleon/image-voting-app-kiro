@@ -27,7 +27,7 @@ export default function AboutPage() {
         <section className="text-center mb-12">
           <div className="relative w-32 h-32 mx-auto mb-6">
             <Image
-              src="/images/profile.svg"
+              src="/images/profile.jpg"
               alt={t('profileAlt')}
               fill
               className="rounded-full object-cover bg-gray-200 dark:bg-gray-700"

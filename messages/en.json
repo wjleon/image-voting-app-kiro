@@ -56,13 +56,13 @@
     "pageTitle": "About - AI Image Voting",
     "metaDescription": "Learn about the creator of the AI Image Model Comparison Voting Application",
     "profileAlt": "Profile picture",
-    "name": "Your Name",
+    "name": "Wilmer León",
     "tagline": "Software Engineer & AI Enthusiast",
     "bioTitle": "About This Project",
     "bioText": "This application was created to provide an unbiased platform for comparing AI-generated images from different models. By using a fairness algorithm and complete URL anonymization, we ensure that votes are based purely on image quality rather than model reputation.",
     "connectTitle": "Connect With Me",
-    "linkedinUrl": "https://linkedin.com/in/yourprofile",
-    "mediumUrl": "https://medium.com/@yourprofile",
-    "githubUrl": "https://github.com/yourprofile"
+    "linkedinUrl": "https://www.linkedin.com/in/wilmer-leon/",
+    "mediumUrl": "https://medium.com/@wjleon",
+    "githubUrl": "https://github.com/wjleon"
   }
 }
