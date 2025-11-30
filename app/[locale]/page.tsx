@@ -13,21 +13,25 @@ export default async function Home({
   const { locale } = await params;
   const { exclude: excludeSlug } = await searchParams;
 
-  // Build where clause
-  const whereClause = excludeSlug
-    ? {
-        slug: {
-          not: excludeSlug,
-        },
-      }
-    : {};
-
-  // Get count of available prompts
-  const promptCount = await prisma.prompt.count({
-    where: whereClause,
+  // Get prompts with at least 4 images
+  const validPrompts = await prisma.prompt.findMany({
+    where: {
+      ...whereClause,
+      images: {
+        some: {}, // Has at least one image
+      },
+    },
+    include: {
+      _count: {
+        select: { images: true },
+      },
+    },
   });
 
-  if (promptCount === 0) {
+  // Filter to only prompts with 4+ images
+  const promptsWithEnoughImages = validPrompts.filter((p) => p._count.images >= 4);
+
+  if (promptsWithEnoughImages.length === 0) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-6 sm:p-12 lg:p-24">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-center">
@@ -40,12 +44,9 @@ export default async function Home({
     );
   }
 
-  // Select a random prompt
-  const randomSkip = Math.floor(Math.random() * promptCount);
-  const randomPrompt = await prisma.prompt.findFirst({
-    where: whereClause,
-    skip: randomSkip,
-  });
+  // Select a random prompt from valid ones
+  const randomIndex = Math.floor(Math.random() * promptsWithEnoughImages.length);
+  const randomPrompt = promptsWithEnoughImages[randomIndex];
 
   if (!randomPrompt) {
     return (

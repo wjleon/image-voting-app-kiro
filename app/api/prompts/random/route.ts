@@ -30,51 +30,49 @@ export async function GET(request: NextRequest) {
     const excludeSlug = searchParams.get('exclude');
     const locale = searchParams.get('locale') || 'en';
 
-    // Build where clause
+    // Build where clause - only select prompts with at least 4 images
     const whereClause = excludeSlug
       ? {
           slug: {
             not: excludeSlug,
           },
+          images: {
+            some: {}, // Has at least one image
+          },
         }
-      : {};
+      : {
+          images: {
+            some: {}, // Has at least one image
+          },
+        };
 
-    // Get count of available prompts
-    const promptCount = await prisma.prompt.count({
+    // Get prompts with image counts
+    const validPrompts = await prisma.prompt.findMany({
       where: whereClause,
+      include: {
+        _count: {
+          select: { images: true },
+        },
+      },
     });
 
-    if (promptCount === 0) {
+    // Filter to only prompts with 4+ images
+    const promptsWithEnoughImages = validPrompts.filter((p) => p._count.images >= 4);
+
+    if (promptsWithEnoughImages.length === 0) {
       return NextResponse.json(
-        { success: false, error: 'No prompts available' },
+        { success: false, error: 'No prompts with sufficient images available' },
         { status: 404 }
       );
     }
 
-    // Select a random prompt using random skip
-    const randomSkip = Math.floor(Math.random() * promptCount);
-    const randomPrompt = await prisma.prompt.findFirst({
-      where: whereClause,
-      skip: randomSkip,
-    });
+    // Select a random prompt from valid ones
+    const randomIndex = Math.floor(Math.random() * promptsWithEnoughImages.length);
+    const randomPrompt = promptsWithEnoughImages[randomIndex];
 
     if (!randomPrompt) {
       return NextResponse.json(
         { success: false, error: 'Failed to select random prompt' },
-        { status: 500 }
-      );
-    }
-
-    // Check if prompt has enough images
-    const imageCount = await prisma.image.count({
-      where: { promptId: randomPrompt.id },
-    });
-
-    if (imageCount < 4) {
-      // If this prompt doesn't have enough images, try to find another one
-      // This is a fallback - in production, prompts with < 4 images should be filtered
-      return NextResponse.json(
-        { success: false, error: 'Selected prompt has insufficient images' },
         { status: 500 }
       );
     }
