@@ -1,0 +1,15 @@
+Design a vertical poster for a fictional late-night ramen bar called 
+"NEON NOODLES".
+
+Requirements:
+- The main headline text, perfectly readable: "NEON NOODLES"
+- Subheadline text: "Open 11 PM – 4 AM • Cyber City District 7"
+- A smaller tagline near the bottom: "Fuel for hackers, dreamers & night owls."
+
+Visual style:
+- Neon cyberpunk aesthetic with glowing signage and rain reflections.
+- A steaming bowl of ramen as the focal illustration, with chopsticks and glowing broth.
+- Color palette: deep purples, electric cyan, hot pink, accents of golden yellow.
+- Composition: enough negative space around the main title so it can be clearly read in a thumbnail.
+
+Aspect ratio: 4:5, optimized for social media posts.

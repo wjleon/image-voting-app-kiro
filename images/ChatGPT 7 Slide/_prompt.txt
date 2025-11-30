@@ -1,0 +1,21 @@
+Design a single presentation slide titled "How This AI System Works".
+
+Layout requirements:
+- A clear, readable main title at the top: "How This AI System Works"
+- A 3-step horizontal diagram in the center:
+  1) "User Input"
+  2) "AI Processing"
+  3) "Smart Output"
+- Each step represented by a simple icon and a short line of text beneath.
+- On the right side, a small box titled "Key Benefits" with 3 bullet points:
+  - "Faster decisions"
+  - "Lower manual work"
+  - "Continuous learning"
+
+Visual style:
+- Clean, modern slide design suitable for a tech conference.
+- Color palette: white background with accents in electric blue and charcoal grey.
+- Fonts should be simple and sans-serif.
+- Everything must be readable at typical presentation size.
+
+Aspect ratio: 16:9.

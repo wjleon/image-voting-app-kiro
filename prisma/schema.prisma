@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Prompt {
+  id        String   @id @default(uuid())
+  text      String
+  slug      String   @unique
+  images    Image[]
+  votes     Vote[]
+  createdAt DateTime @default(now())
+
+  @@map("prompts")
+}
+
+model Image {
+  id              String            @id @default(uuid())
+  promptId        String
+  prompt          Prompt            @relation(fields: [promptId], references: [id])
+  modelName       String
+  imagePath       String
+  impressionCount Int               @default(0)
+  votes           Vote[]
+  impressions     ImageImpression[]
+  createdAt       DateTime          @default(now())
+
+  @@index([promptId, impressionCount])
+  @@map("images")
+}
+
+model Vote {
+  id           String   @id @default(uuid())
+  promptId     String
+  prompt       Prompt   @relation(fields: [promptId], references: [id])
+  imageId      String?
+  image        Image?   @relation(fields: [imageId], references: [id])
+  chosenModel  String
+  shownModels  Json     // Array of 4 model names
+  userIp       String
+  userAgent    String
+  browser      String?
+  os           String?
+  device       String?
+  country      String?
+  region       String?
+  sessionId    String
+  timestamp    DateTime @default(now())
+
+  @@index([promptId])
+  @@index([chosenModel])
+  @@index([timestamp])
+  @@map("votes")
+}
+
+model ImageImpression {
+  id        String   @id @default(uuid())
+  promptId  String
+  imageId   String
+  image     Image    @relation(fields: [imageId], references: [id])
+  modelName String
+  sessionId String?
+  timestamp DateTime @default(now())
+
+  @@index([imageId])
+  @@index([timestamp])
+  @@map("image_impressions")
+}
