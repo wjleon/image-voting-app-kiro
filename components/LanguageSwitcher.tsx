@@ -61,7 +61,7 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
         value={currentLocale}
         onChange={(e) => handleLanguageChange(e.target.value)}
         disabled={isPending}
-        className="appearance-none bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="appearance-none bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 border border-blue-200 dark:border-gray-600 rounded-lg px-4 py-2 pr-10 text-sm font-medium text-gray-700 dark:text-gray-300 hover:from-blue-100 hover:to-purple-100 dark:hover:from-gray-700 dark:hover:to-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md cursor-pointer"
         aria-label="Select language"
       >
         {locales.map((locale) => (
@@ -70,7 +70,7 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
           </option>
         ))}
       </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-blue-600 dark:text-blue-400">
         <svg
           className="fill-current h-4 w-4"
           xmlns="http://www.w3.org/2000/svg"

@@ -92,9 +92,11 @@ export function ImageGrid({
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 px-2">
           {t('voting.title')}
         </h1>
-        <p className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto px-2">
-          {promptText}
-        </p>
+        <div className="max-w-4xl mx-auto px-2">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-300 border-2 border-gray-400 dark:border-gray-500 rounded-lg px-4 py-3 sm:px-6 sm:py-4" style={{ fontFamily: '"Courier New", Courier, monospace' }}>
+            {promptText}
+          </p>
+        </div>
       </div>
 
       {/* Error Message */}
