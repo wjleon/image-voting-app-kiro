@@ -1,6 +1,6 @@
 # AI Image Model Comparison Voting Application
 
-A Next.js application for evaluating and voting on AI-generated images from different models.
+A Next.js application for evaluating and voting on AI-generated images from different models. Features complete URL anonymization to prevent bias and full internationalization support (English/Spanish).
 
 ## Tech Stack
 
@@ -8,8 +8,18 @@ A Next.js application for evaluating and voting on AI-generated images from diff
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS
 - **Database**: Postgres with Prisma ORM
+- **Internationalization**: next-intl with automatic locale detection
 - **Testing**: Vitest with fast-check for property-based testing
 - **Deployment**: Vercel
+
+## Key Features
+
+- **Unbiased Voting**: Complete URL anonymization - no model names in URLs or paths
+- **Multilingual**: Full i18n support with English and Spanish
+- **Fair Comparison**: Fairness algorithm ensures balanced model exposure
+- **Anonymous Images**: Images served via UUID-based API endpoints
+- **Session Tracking**: Cookie-based session management for vote tracking
+- **Admin Dashboard**: Protected analytics and data export interface
 
 ## Getting Started
 
@@ -151,6 +161,36 @@ To add support for a new language:
    npx tsx scripts/translate-openai.ts
    ```
 
+## URL Anonymization
+
+The application implements complete URL anonymization to prevent voting bias:
+
+### Anonymized Components
+
+1. **Prompt URLs**: Use hash-based slugs instead of descriptive names
+   - Before: `/es/p/claude-32-product-packaging`
+   - After: `/es/p/prompt-f5fbc1e00008`
+
+2. **Image Paths**: Hash-based filenames in anonymized folders
+   - Before: `/images/claude-32-product-packaging/Claude/image.jpg`
+   - After: `/images/prompt-f5fbc1e00008/a8387e2d.png`
+
+3. **Image URLs**: Served via UUID-based API endpoint
+   - Format: `/api/image/[uuid]`
+   - Example: `/api/image/f944a9d7-3353-4d10-8b61-e70ca46808e9`
+
+### Anonymization Scripts
+
+Run these scripts to anonymize existing data:
+
+```bash
+# Anonymize prompt slugs
+npx tsx scripts/anonymize-prompt-slugs.ts
+
+# Reorganize image folders to match new slugs
+npx tsx scripts/reorganize-image-folders.ts
+```
+
 ## Environment Variables
 
 The application requires the following environment variables:
@@ -169,7 +209,7 @@ The application requires the following environment variables:
 | `NODE_ENV` | Node environment | `development` |
 | `NEXT_PUBLIC_APP_URL` | Base URL for the application | - |
 | `OPENAI_API_KEY` | OpenAI API key for translations | - |
-| `OPENAI_MODEL` | OpenAI model for translations | `gpt-3.5-turbo` |
+| `OPENAI_MODEL` | OpenAI model for translations | `gpt-4o-mini` |
 
 ### Environment Variable Validation
 
@@ -285,21 +325,44 @@ If deploying to other platforms:
 ## Project Structure
 
 ```
-├── app/                  # Next.js App Router pages
-│   ├── api/             # API routes
-│   ├── p/[slug]/        # Dynamic prompt pages
-│   └── admin/           # Admin dashboard
-├── components/           # React components
-├── lib/                  # Utility functions
-│   ├── prisma.ts        # Prisma client
-│   ├── fairness.ts      # Image selection algorithm
-│   └── env.ts           # Environment validation
-├── middleware.ts         # Admin authentication
-├── prisma/              # Database schema and migrations
-├── public/              # Static assets
-├── scripts/             # Utility scripts
-├── tests/               # Test files
-└── types/               # TypeScript type definitions
+├── app/                          # Next.js App Router pages
+│   ├── [locale]/                # Internationalized routes
+│   │   ├── p/[slug]/           # Dynamic prompt pages
+│   │   ├── admin/              # Admin dashboard
+│   │   └── layout.tsx          # Locale-aware layout
+│   └── api/                     # API routes
+│       ├── vote/               # Vote submission
+│       ├── prompts/random/     # Random prompt selection
+│       ├── image/[imageId]/    # Anonymous image serving
+│       └── admin/stats/        # Admin statistics
+├── components/                   # React components
+│   ├── ImageGrid.tsx           # Voting interface
+│   ├── LanguageSwitcher.tsx    # i18n language selector
+│   ├── SessionManager.tsx      # Session cookie management
+│   └── VoteConfirmation.tsx    # Post-vote feedback
+├── lib/                          # Utility functions
+│   ├── prisma.ts               # Prisma client
+│   ├── fairness.ts             # Image selection algorithm
+│   ├── translations.ts         # i18n translation helpers
+│   └── env.ts                  # Environment validation
+├── messages/                     # i18n translation files
+│   ├── en.json                 # English UI strings
+│   └── es.json                 # Spanish UI strings
+├── middleware.ts                 # i18n locale detection
+├── i18n.ts                      # i18n configuration
+├── prisma/                       # Database schema and migrations
+│   └── schema.prisma           # Database models
+├── public/                       # Static assets
+│   └── images/                 # Anonymized image storage
+│       └── prompt-[hash]/      # Hash-based folders
+├── scripts/                      # Utility scripts
+│   ├── anonymize-prompt-slugs.ts
+│   ├── reorganize-image-folders.ts
+│   ├── translate-openai.ts
+│   ├── check-translations.ts
+│   └── backfill-english-translations.ts
+├── tests/                        # Test files
+└── types/                        # TypeScript type definitions
 ```
 
 ## License

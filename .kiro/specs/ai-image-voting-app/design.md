@@ -4,7 +4,7 @@
 
 The AI Image Model Comparison Voting Application is a Next.js-based web application that enables unbiased evaluation of AI-generated images from ten different models. The system consists of three main phases: (1) a local ingestion process that converts a folder structure into database records and deployed assets, (2) a runtime voting interface that displays prompts and images using a fairness algorithm, and (3) an admin analytics panel for data analysis.
 
-The application prioritizes statistical validity through a fairness algorithm that ensures balanced exposure across all models by tracking impression counts and selecting the least-viewed images. All data persists in Postgres, and the system captures comprehensive metadata for each vote including geolocation, device information, and session tracking.
+The application prioritizes statistical validity through a fairness algorithm that ensures balanced exposure across all models by tracking impression counts and selecting the least-viewed images. Complete URL anonymization prevents bias by using hash-based identifiers for prompts and UUID-based endpoints for images. Full internationalization support (English/Spanish) with automatic locale detection provides a localized experience. All data persists in Postgres, and the system captures comprehensive metadata for each vote including geolocation, device information, and session tracking.
 
 ## Architecture
 
@@ -73,12 +73,14 @@ The application prioritizes statistical validity through a fairness algorithm th
 
 - **Frontend Framework**: Next.js 15+ (App Router, TypeScript)
 - **Styling**: Tailwind CSS with shadcn/ui components
+- **Internationalization**: next-intl for i18n with automatic locale detection
 - **Database**: Postgres (via Vercel Postgres or external provider)
 - **ORM**: Prisma for type-safe database access
 - **Image Optimization**: Next.js Image component
 - **Deployment**: Vercel serverless platform
 - **Session Management**: Client-side UUID cookies
 - **Metadata Parsing**: ua-parser-js for user agent analysis
+- **URL Anonymization**: MD5 hashing for slugs and filenames, UUID-based image serving
 
 ### Data Flow
 
@@ -130,12 +132,25 @@ The application prioritizes statistical validity through a fairness algorithm th
 
 ```prisma
 model Prompt {
+  id                  String              @id @default(uuid())
+  text                String
+  slug                String              @unique
+  images              Image[]
+  votes               Vote[]
+  promptTranslations  PromptTranslation[]
+  createdAt           DateTime            @default(now())
+}
+
+model PromptTranslation {
   id        String   @id @default(uuid())
+  promptId  String
+  prompt    Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+  locale    String
   text      String
-  slug      String   @unique
-  images    Image[]
-  votes     Vote[]
   createdAt DateTime @default(now())
+  
+  @@unique([promptId, locale])
+  @@index([promptId])
 }
 
 model Image {
@@ -190,6 +205,21 @@ model ImageImpression {
 ```
 
 ### API Routes
+
+#### GET /api/image/[imageId]
+
+**Purpose**: Serve images anonymously without revealing model names in URLs
+
+**Parameters**:
+- `imageId`: UUID of the image
+
+**Response**: Image file with appropriate content-type headers
+
+**Implementation**:
+1. Query database for image record by UUID
+2. Read image file from disk using stored imagePath
+3. Determine content-type from file extension
+4. Return image with cache headers
 
 #### POST /api/vote
 
@@ -322,6 +352,65 @@ interface VoteConfirmationProps {
 - Generates new UUID if no session exists
 - Stores session ID in cookie with appropriate expiration
 - Provides session ID to voting components
+
+### URL Anonymization Implementation
+
+**Purpose**: Prevent voting bias by removing all model name references from URLs and paths
+
+#### Prompt Slug Anonymization
+
+**Function**: `generateAnonymousSlug(promptId: string): string`
+
+```typescript
+function generateAnonymousSlug(promptId: string): string {
+  const hash = createHash('md5').update(promptId).digest('hex').substring(0, 12);
+  return `prompt-${hash}`;
+}
+```
+
+**Result**: Slugs like `prompt-f5fbc1e00008` instead of `claude-32-product-packaging`
+
+#### Image Path Anonymization
+
+**Function**: `generateAnonymousPath(imageId: string, promptSlug: string, extension: string): string`
+
+```typescript
+function generateAnonymousPath(imageId: string, promptSlug: string, extension: string): string {
+  const hash = createHash('md5').update(imageId).digest('hex').substring(0, 8);
+  return `/images/${promptSlug}/${hash}${extension}`;
+}
+```
+
+**Result**: Paths like `/images/prompt-f5fbc1e00008/a8387e2d.png`
+
+#### Image Serving
+
+Images are served through the `/api/image/[imageId]` endpoint using UUIDs:
+- Client receives: `/api/image/f944a9d7-3353-4d10-8b61-e70ca46808e9`
+- Server looks up imagePath in database
+- Server reads and returns the actual file
+
+This completely decouples the client-visible URL from the model identity.
+
+### Internationalization Implementation
+
+**Library**: next-intl
+
+**Supported Locales**: `['en', 'es']`
+
+**Locale Detection Order**:
+1. Cookie (`NEXT_LOCALE`)
+2. Accept-Language header
+3. Default to English
+
+**Translation Storage**:
+- UI strings: `/messages/{locale}.json`
+- Prompt translations: `prompt_translations` database table
+
+**Locale Routing**:
+- All routes prefixed with locale: `/[locale]/...`
+- Middleware handles locale detection and redirection
+- Language switcher updates URL and sets cookie
 
 ### Fairness Algorithm Implementation
 

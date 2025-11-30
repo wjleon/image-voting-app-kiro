@@ -110,10 +110,12 @@ This document specifies the requirements for an AI Image Model Comparison Voting
 #### Acceptance Criteria
 
 1. WHEN images are displayed to a user THEN the Voting System SHALL NOT show model names or identifiable information in the UI
-2. WHEN image filenames are generated THEN the Voting System SHALL use anonymized naming that does not reveal the model identity
-3. WHEN a user inspects the page source THEN the Voting System SHALL ensure image paths do not obviously indicate the model name
-4. WHEN a vote is submitted THEN the Voting System SHALL internally track the model mapping without exposing it to the client
-5. WHEN the confirmation message is shown THEN the Voting System SHALL NOT reveal which model the user voted for
+2. WHEN image filenames are generated THEN the Voting System SHALL use MD5 hash-based naming that does not reveal the model identity
+3. WHEN a user inspects the page source or URL THEN the Voting System SHALL ensure prompt slugs and image paths use hash-based identifiers
+4. WHEN images are served THEN the Voting System SHALL use a UUID-based API endpoint that does not expose model names
+5. WHEN a vote is submitted THEN the Voting System SHALL internally track the model mapping without exposing it to the client
+6. WHEN the confirmation message is shown THEN the Voting System SHALL NOT reveal which model the user voted for
+7. WHEN prompt URLs are generated THEN the Voting System SHALL use hash-based slugs derived from prompt IDs instead of descriptive names
 
 ### Requirement 9
 
@@ -135,6 +137,19 @@ This document specifies the requirements for an AI Image Model Comparison Voting
 
 1. WHEN a user completes a vote THEN the Voting System SHALL provide an option to advance to the next prompt
 2. WHEN a user requests a random prompt THEN the Voting System SHALL select a prompt and apply the fairness algorithm to choose four images
-3. WHEN a prompt is accessed THEN the Voting System SHALL use a dedicated route pattern such as /p/[slug]
-4. WHEN a user navigates to the root path THEN the Voting System SHALL redirect to a random prompt or display a prompt selection interface
+3. WHEN a prompt is accessed THEN the Voting System SHALL use a dedicated route pattern such as /[locale]/p/[slug]
+4. WHEN a user navigates to the root path THEN the Voting System SHALL redirect to a random prompt with the appropriate locale prefix
 5. WHEN a prompt page loads THEN the Voting System SHALL display the prompt text prominently above the image grid
+
+### Requirement 11
+
+**User Story:** As a site visitor, I want to view the application in my preferred language, so that I can understand the interface and prompts in my native language.
+
+#### Acceptance Criteria
+
+1. WHEN a user first visits the site THEN the Voting System SHALL detect the preferred language from browser settings or cookies
+2. WHEN a user accesses any page THEN the Voting System SHALL display UI text in the detected or selected language
+3. WHEN a user switches languages THEN the Voting System SHALL update the URL to include the new locale prefix and persist the choice in a cookie
+4. WHEN a prompt is displayed THEN the Voting System SHALL show the translated prompt text if available, otherwise fall back to the original language
+5. WHEN the language switcher is rendered THEN the Voting System SHALL display available languages with their native names
+6. WHEN a user navigates between pages THEN the Voting System SHALL maintain the selected language across all routes
