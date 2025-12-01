@@ -1,6 +1,9 @@
 import prisma from '@/lib/prisma';
 import { getTranslations } from 'next-intl/server';
 
+// Force dynamic rendering - don't try to build this page statically
+export const dynamic = 'force-dynamic';
+
 /**
  * Admin Dashboard Page
  * Displays voting statistics and analytics
