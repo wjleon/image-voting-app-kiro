@@ -1,0 +1,21 @@
+I want to make all file naming consisten; so, do the following
+1. rename all image names so it contains the following name structure
+<parent-directory-name>-<model-name>-<seq>.<extension>
+Where
+<parent-directory-name> : is the name of parent folder -replace spaces with underscores-, for instance, Claude_2.1_Maya_Coorporate
+<model-name> : is the name of the model, the only possible names are:
+ByteDance
+ChatGPT
+Flux
+Grok
+Ideogram
+Leonardo
+Midjourney
+NanoBananaPro
+Qwen
+Reve
+
+Rename whatever you need to in order to match the format
+
+<seq> : should be a natural number, if the folder contains 4 images, then there will be -1, -2, -3 and -4
+<extension> : should be left as is, i.e., whatever the image extension is 
