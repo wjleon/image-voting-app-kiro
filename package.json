@@ -18,7 +18,7 @@
     "db:reset": "prisma migrate reset",
     "ingest": "npx tsx scripts/run-ingestion.ts && npm run db:seed && npx tsx scripts/translate-openai.ts && npx tsx scripts/check-translations.ts",
     "ingest:full": "./scripts/ingest-and-translate.sh",
-    "anonymize:slugs": "npx tsx scripts/anonymize-prompt-slugs.ts",
+    "anonymize:slugs": "npx tsx scripts/anonymize-slugs.ts",
     "anonymize:images": "npx tsx scripts/anonymize-images.ts",
     "anonymize": "npm run anonymize:slugs && npm run anonymize:images"
   },
