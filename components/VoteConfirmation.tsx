@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
  */
 interface VoteConfirmationProps {
   onNext: () => void;
-  autoAdvanceDelay?: number; // milliseconds, default 3000
+  autoAdvanceDelay?: number; // milliseconds, default 1000
 }
 
 /**
@@ -18,7 +18,7 @@ interface VoteConfirmationProps {
  * @param onNext - Callback to advance to next prompt
  * @param autoAdvanceDelay - Optional delay before auto-advancing (ms)
  */
-export function VoteConfirmation({ onNext, autoAdvanceDelay = 3000 }: VoteConfirmationProps) {
+export function VoteConfirmation({ onNext, autoAdvanceDelay = 1000 }: VoteConfirmationProps) {
   const t = useTranslations();
 
   useEffect(() => {
