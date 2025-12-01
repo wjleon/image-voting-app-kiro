@@ -1,25 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import { createHash } from 'crypto';
 
 const prisma = new PrismaClient();
 
 /**
- * Generate a short, anonymous slug from a prompt ID
- * Uses first 8 characters of SHA-256 hash for consistency
- * 
  * IMPORTANT: After running this seed, you MUST run the anonymize-slugs script:
- *   npx tsx scripts/anonymize-slugs.ts
+ *   npm run anonymize:slugs
  * 
  * This ensures URLs don't expose model names (e.g., p-f378b9c6 instead of claude-11-the-ai-action-figure)
- * 
- * Note: This function is kept here for reference but the actual anonymization
- * happens via the scripts/anonymize-slugs.ts script after seeding.
+ * See scripts/anonymize-slugs.ts for the implementation.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function generateAnonymousSlug(promptId: string): string {
-  const hash = createHash('sha256').update(promptId).digest('hex');
-  return `p-${hash.substring(0, 8)}`;
-}
 
 async function main() {
   console.log('Starting database seed...');
