@@ -11,7 +11,11 @@ const prisma = new PrismaClient();
  *   npx tsx scripts/anonymize-slugs.ts
  * 
  * This ensures URLs don't expose model names (e.g., p-f378b9c6 instead of claude-11-the-ai-action-figure)
+ * 
+ * Note: This function is kept here for reference but the actual anonymization
+ * happens via the scripts/anonymize-slugs.ts script after seeding.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function generateAnonymousSlug(promptId: string): string {
   const hash = createHash('sha256').update(promptId).digest('hex');
   return `p-${hash.substring(0, 8)}`;
