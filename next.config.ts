@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
+  // Exclude images from serverless function bundles
+  outputFileTracingExcludes: {
+    '*': ['public/images/**/*'],
+  },
   async headers() {
     return [
       {
