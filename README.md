@@ -2,6 +2,28 @@
 
 A Next.js application for evaluating and voting on AI-generated images from different models. Features complete URL anonymization to prevent bias and full internationalization support (English/Spanish).
 
+## 📚 Documentation Index
+
+This README serves as the main entry point. For detailed information on specific topics, see:
+
+- **[SETUP.md](./SETUP.md)** - Initial setup and installation guide
+- **[DATABASE_SETUP.md](./DATABASE_SETUP.md)** - Database configuration and schema
+- **[INGESTION_GUIDE.md](./INGESTION_GUIDE.md)** - How to add new images and prompts
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Deployment instructions for Vercel and other platforms
+- **[IMPLEMENTATION_STATUS.md](./IMPLEMENTATION_STATUS.md)** - Current implementation status and features
+- **[I18N_IMPLEMENTATION_SUMMARY.md](./I18N_IMPLEMENTATION_SUMMARY.md)** - Internationalization implementation details
+- **[PROGRESS.md](./PROGRESS.md)** - Development progress and milestones
+- **[FINAL_SUMMARY.md](./FINAL_SUMMARY.md)** - Project completion summary
+- **[CRITICAL_FIXES_COMPLETE.md](./CRITICAL_FIXES_COMPLETE.md)** - Critical bug fixes log
+- **[FIXES_VERIFIED.md](./FIXES_VERIFIED.md)** - Verification of fixes
+- **[prisma/README.md](./prisma/README.md)** - Prisma schema documentation
+- **[images/AI_Image_Generator_Showdown_2025_Update.md](./images/AI_Image_Generator_Showdown_2025_Update.md)** - Image dataset information
+
+### Spec Documents (Development Process)
+- **[.kiro/specs/ai-image-voting-app/](../.kiro/specs/ai-image-voting-app/)** - Original app specification
+- **[.kiro/specs/i18n/](../.kiro/specs/i18n/)** - Internationalization specification
+- **[.kiro/specs/navigation-about/](../.kiro/specs/navigation-about/)** - Navigation and About page specification
+
 ## Tech Stack
 
 - **Framework**: Next.js 15+ with App Router
@@ -23,7 +45,9 @@ A Next.js application for evaluating and voting on AI-generated images from diff
 - **Global Navigation**: Glassmorphism navigation bar with language switcher
 - **About Page**: Creator profile with bio and social media links
 
-## Getting Started
+## 🚀 Quick Start
+
+For detailed setup instructions, see **[SETUP.md](./SETUP.md)**.
 
 ### Prerequisites
 
@@ -31,344 +55,146 @@ A Next.js application for evaluating and voting on AI-generated images from diff
 - npm or yarn
 - Postgres database
 
-### Installation
-
-1. Install dependencies:
+### Quick Setup
 
 ```bash
+# 1. Install dependencies
 npm install
-```
 
-2. Set up environment variables:
-
-Copy the example environment file and configure it:
-
-```bash
+# 2. Set up environment variables
 cp .env.example .env
-```
+# Edit .env with your database URL and admin password
 
-Then edit `.env` with your actual values:
+# 3. Set up database
+npm run db:generate
+npm run db:push
 
-```env
-# Required
-DATABASE_URL="postgresql://user:password@localhost:5432/ai_image_voting"
-ADMIN_PASSWORD="your-secure-password"
+# 4. Ingest images and generate translations (if you have images)
+npm run ingest
 
-# Optional
-NODE_ENV="development"
-```
-
-See `.env.example` for detailed documentation of all available environment variables.
-
-3. Set up the database:
-
-```bash
-npm run db:generate  # Generate Prisma Client
-npm run db:push      # Create database tables
-npm run db:seed      # Seed database (optional)
-```
-
-Or use the initialization script:
-
-```bash
-./scripts/init-db.sh
-```
-
-4. Run the development server:
-
-```bash
+# 5. Run development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## Internationalization (i18n)
+For more details, see:
+- **[SETUP.md](./SETUP.md)** - Complete setup guide
+- **[DATABASE_SETUP.md](./DATABASE_SETUP.md)** - Database configuration
+- **[INGESTION_GUIDE.md](./INGESTION_GUIDE.md)** - Adding images
+
+## 🌍 Internationalization (i18n)
 
 The application supports multiple languages (English and Spanish) with automatic locale detection.
 
-### Supported Languages
+For complete i18n documentation, see **[I18N_IMPLEMENTATION_SUMMARY.md](./I18N_IMPLEMENTATION_SUMMARY.md)**.
 
-- **English (en)**: Default language
-- **Spanish (es)**: Fully supported with UI and prompt translations
+### Quick i18n Guide
 
-### How It Works
+**Supported Languages:**
+- English (en) - Default
+- Spanish (es) - Fully supported
 
-1. **Automatic Locale Detection**: The app detects the user's preferred language from:
-   - Browser cookie (if previously set)
-   - Accept-Language header
-   - Falls back to English
-
-2. **Language Switcher**: Users can manually switch languages using the dropdown in the top-right corner
-
-3. **Localized URLs**: All pages use locale-prefixed URLs:
-   - English: `/en/...`
-   - Spanish: `/es/...`
-
-### Translation Management
-
-#### Generating Spanish Translations
-
-To translate all prompts to Spanish using OpenAI:
-
-1. Set your OpenAI API key in `.env`:
-   ```env
-   OPENAI_API_KEY="sk-..."
-   ```
-
-2. Run the translation script:
-   ```bash
-   npx tsx scripts/translate-openai.ts
-   ```
-
-#### Checking Translation Coverage
-
-To verify translation coverage:
-
+**Generate Translations:**
 ```bash
+# Translate all prompts to Spanish
+npx tsx scripts/translate-openai.ts
+
+# Check translation coverage
 npx tsx scripts/check-translations.ts
 ```
 
-This will show:
-- Total prompts
-- Translated prompts
-- Missing translations
-- Coverage percentage
+**Adding New Languages:**
+See [I18N_IMPLEMENTATION_SUMMARY.md](./I18N_IMPLEMENTATION_SUMMARY.md) for detailed instructions.
 
-#### Backfilling English Translations
+## 👤 Customizing the About Page
 
-If you have existing prompts without English translations:
+To customize the About page with your information:
 
-```bash
-npx tsx scripts/backfill-english-translations.ts
-```
-
-### Adding New Languages
-
-To add support for a new language:
-
-1. Update `i18n.ts` to include the new locale:
-   ```typescript
-   export const locales = ['en', 'es', 'fr'] as const;
+1. **Update Profile Info** - Edit `messages/en.json` and `messages/es.json`:
+   ```json
+   {
+     "About": {
+       "name": "Your Name",
+       "tagline": "Your Title",
+       "bioText": "Your bio...",
+       "linkedinUrl": "https://linkedin.com/in/your-profile",
+       "mediumUrl": "https://medium.com/@your-profile",
+       "githubUrl": "https://github.com/your-username"
+     }
+   }
    ```
 
-2. Create a new message file:
-   ```bash
-   cp messages/en.json messages/fr.json
-   ```
+2. **Update Profile Image** - Replace `public/images/profile.jpg` with your photo (256x256px recommended)
 
-3. Translate the UI strings in the new message file
+## 🔒 URL Anonymization
 
-4. Run the translation script for prompts:
-   ```bash
-   npx tsx scripts/translate-openai.ts
-   ```
+The application implements complete URL anonymization to prevent voting bias. All URLs use hash-based identifiers instead of descriptive names.
 
-## Customizing the About Page
+**Examples:**
+- Prompt URLs: `/es/p/prompt-f5fbc1e00008`
+- Image URLs: `/api/image/f944a9d7-3353-4d10-8b61-e70ca46808e9`
 
-The About page displays creator information and social media links. To customize it:
+For details, see **[IMPLEMENTATION_STATUS.md](./IMPLEMENTATION_STATUS.md)**.
 
-### Update Profile Information
+## ⚙️ Environment Variables
 
-Edit the translation files in `messages/`:
+**Required:**
+- `DATABASE_URL` - PostgreSQL connection string
+- `ADMIN_PASSWORD` - Admin dashboard password (min 8 characters)
 
-**English (`messages/en.json`):**
-```json
-{
-  "About": {
-    "name": "Your Name",
-    "tagline": "Your Title/Tagline",
-    "bioText": "Your bio text here...",
-    "linkedinUrl": "https://linkedin.com/in/your-profile",
-    "mediumUrl": "https://medium.com/@your-profile",
-    "githubUrl": "https://github.com/your-username"
-  }
-}
-```
+**Optional:**
+- `OPENAI_API_KEY` - For generating translations
+- `OPENAI_MODEL` - Translation model (default: `gpt-4o-mini`)
 
-**Spanish (`messages/es.json`):**
-```json
-{
-  "About": {
-    "name": "Tu Nombre",
-    "tagline": "Tu Título",
-    "bioText": "Tu biografía aquí...",
-    "linkedinUrl": "https://linkedin.com/in/tu-perfil",
-    "mediumUrl": "https://medium.com/@tu-perfil",
-    "githubUrl": "https://github.com/tu-usuario"
-  }
-}
-```
+See `.env.example` for complete documentation.
 
-### Update Profile Image
+## 📥 Adding Images and Prompts
 
-Replace the profile image at `public/images/profile.svg` with your own image:
-
-1. Prepare your image (recommended: 256x256px, < 50KB)
-2. Save it as `public/images/profile.svg` (or `.jpg`, `.png`)
-3. If using a different format, update the image path in `app/[locale]/about/page.tsx`
-
-The component includes automatic fallback handling if the image fails to load.
-
-## URL Anonymization
-
-The application implements complete URL anonymization to prevent voting bias:
-
-### Anonymized Components
-
-1. **Prompt URLs**: Use hash-based slugs instead of descriptive names
-   - Before: `/es/p/claude-32-product-packaging`
-   - After: `/es/p/prompt-f5fbc1e00008`
-
-2. **Image Paths**: Hash-based filenames in anonymized folders
-   - Before: `/images/claude-32-product-packaging/Claude/image.jpg`
-   - After: `/images/prompt-f5fbc1e00008/a8387e2d.png`
-
-3. **Image URLs**: Served via UUID-based API endpoint
-   - Format: `/api/image/[uuid]`
-   - Example: `/api/image/f944a9d7-3353-4d10-8b61-e70ca46808e9`
-
-### Anonymization Scripts
-
-Run these scripts to anonymize existing data:
+To add new images to the voting app:
 
 ```bash
-# Anonymize prompt slugs
-npx tsx scripts/anonymize-prompt-slugs.ts
-
-# Reorganize image folders to match new slugs
-npx tsx scripts/reorganize-image-folders.ts
+# Complete ingestion process (recommended)
+npm run ingest
 ```
 
-## Environment Variables
+This will:
+1. Scan your `images/` folder
+2. Generate seed file
+3. Populate database
+4. Generate Spanish translations
+5. Verify coverage
 
-The application requires the following environment variables:
+For detailed instructions, see **[INGESTION_GUIDE.md](./INGESTION_GUIDE.md)**.
 
-### Required Variables
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@localhost:5432/dbname` |
-| `ADMIN_PASSWORD` | Password for admin dashboard access | `your-secure-password` |
-
-### Optional Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NODE_ENV` | Node environment | `development` |
-| `NEXT_PUBLIC_APP_URL` | Base URL for the application | - |
-| `OPENAI_API_KEY` | OpenAI API key for translations | - |
-| `OPENAI_MODEL` | OpenAI model for translations | `gpt-4o-mini` |
-
-### Environment Variable Validation
-
-The application automatically validates required environment variables on startup. If any required variables are missing or invalid, you'll see a clear error message indicating what needs to be fixed.
-
-For security:
-- Never commit `.env` files to version control
-- Use strong passwords for `ADMIN_PASSWORD` (minimum 8 characters)
-- In production, use environment-specific values
-
-## Database Management
-
-View database in Prisma Studio:
+## 💾 Database Management
 
 ```bash
-npm run db:studio
+npm run db:studio    # View database in Prisma Studio
+npm run db:migrate   # Create a migration
+npm run db:reset     # Reset database (⚠️ deletes all data)
 ```
 
-Create a migration:
+For detailed database setup, see **[DATABASE_SETUP.md](./DATABASE_SETUP.md)**.
+
+## 🧪 Testing
 
 ```bash
-npm run db:migrate
+npm test              # Run all tests
+npm run test:watch    # Watch mode
+npm run test:coverage # With coverage report
 ```
 
-Reset database (⚠️ deletes all data):
+## 🚀 Deployment
 
-```bash
-npm run db:reset
-```
+This application is optimized for Vercel deployment.
 
-## Testing
+**Quick Deploy:**
+1. Connect repository to Vercel
+2. Set environment variables (`DATABASE_URL`, `ADMIN_PASSWORD`)
+3. Deploy
 
-Run tests:
-
-```bash
-npm test
-```
-
-Run tests in watch mode:
-
-```bash
-npm run test:watch
-```
-
-Run tests with coverage:
-
-```bash
-npm run test:coverage
-```
-
-## Deployment
-
-### Vercel Deployment
-
-This application is optimized for deployment on Vercel.
-
-#### Prerequisites
-
-1. A Vercel account
-2. A PostgreSQL database (Vercel Postgres, Supabase, or other provider)
-
-#### Deployment Steps
-
-1. **Connect your repository to Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your Git repository
-   - Vercel will auto-detect Next.js
-
-2. **Configure environment variables in Vercel:**
-   - Go to Project Settings → Environment Variables
-   - Add the following variables:
-     - `DATABASE_URL`: Your PostgreSQL connection string
-     - `ADMIN_PASSWORD`: Secure password for admin access
-   - Make sure to add them for Production, Preview, and Development environments
-
-3. **Set up the database:**
-   ```bash
-   # Run migrations
-   npx prisma migrate deploy
-   
-   # Seed the database (optional)
-   npx prisma db seed
-   ```
-
-4. **Deploy:**
-   - Push to your main branch
-   - Vercel will automatically build and deploy
-
-#### Database Connection Pooling
-
-For serverless environments like Vercel, use connection pooling:
-
-- **Vercel Postgres**: Automatically configured with pooling
-- **Supabase**: Use the "Connection Pooling" connection string
-- **Other providers**: Consider using Prisma Data Proxy or PgBouncer
-
-#### Post-Deployment
-
-1. Verify environment variables are set correctly
-2. Test the admin dashboard at `/admin` (username: `admin`, password: your `ADMIN_PASSWORD`)
-3. Run the ingestion script to populate images
-4. Monitor logs in Vercel dashboard
-
-### Manual Deployment
-
-If deploying to other platforms:
-
-1. Ensure Node.js 18+ is installed
-2. Set environment variables
-3. Run build: `npm run build`
-4. Start server: `npm start`
+For complete deployment instructions, see **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
 
 ## Project Structure
 
@@ -415,6 +241,13 @@ If deploying to other platforms:
 └── types/                        # TypeScript type definitions
 ```
 
-## License
+## 📖 Additional Documentation
+
+- **[INGESTION_GUIDE.md](./INGESTION_GUIDE.md)** - Complete guide for adding images
+- **[PROGRESS.md](./PROGRESS.md)** - Development timeline and milestones
+- **[IMPLEMENTATION_STATUS.md](./IMPLEMENTATION_STATUS.md)** - Feature implementation status
+- **[FINAL_SUMMARY.md](./FINAL_SUMMARY.md)** - Project completion summary
+
+## 📝 License
 
 Private

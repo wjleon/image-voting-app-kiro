@@ -15,7 +15,9 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "ingest": "npx tsx scripts/run-ingestion.ts && npm run db:seed && npx tsx scripts/translate-openai.ts && npx tsx scripts/check-translations.ts",
+    "ingest:full": "./scripts/ingest-and-translate.sh"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
