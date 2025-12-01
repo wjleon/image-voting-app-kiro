@@ -17,11 +17,11 @@ export function Navigation() {
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 min-h-[64px]">
+        <div className="flex items-center h-16 min-h-[64px] gap-4">
           {/* Logo/Home Link */}
           <Link 
             href={`/${locale}`}
-            className="group relative text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-300 dark:hover:to-purple-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg px-3 py-2"
+            className="group relative text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg px-3 py-2"
             aria-label="Home - AI Image Voting"
           >
             <span className="relative">
@@ -31,10 +31,10 @@ export function Navigation() {
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-1 ml-auto">
             <Link 
               href={`/${locale}`}
-              className="relative px-4 py-2 text-gray-700 dark:text-gray-300 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg min-h-[44px] flex items-center group"
+              className="relative px-3 py-2 text-gray-700 dark:text-gray-300 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg min-h-[44px] flex items-center group"
             >
               <span className="relative">
                 {t('home')}
@@ -43,7 +43,7 @@ export function Navigation() {
             </Link>
             <Link 
               href={`/${locale}/about`}
-              className="relative px-4 py-2 text-gray-700 dark:text-gray-300 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg min-h-[44px] flex items-center group"
+              className="relative px-3 py-2 text-gray-700 dark:text-gray-300 font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg min-h-[44px] flex items-center group"
             >
               <span className="relative">
                 {t('about')}
@@ -52,7 +52,7 @@ export function Navigation() {
             </Link>
             
             {/* Language Switcher */}
-            <div className="ml-2">
+            <div className="ml-3">
               <LanguageSwitcher currentLocale={locale} />
             </div>
           </div>
