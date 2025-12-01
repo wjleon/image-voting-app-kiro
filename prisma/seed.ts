@@ -5751,24 +5751,6 @@ async function main() {
   });
   console.log('  Created 29 images for claude-54-app-store-screenshot');
 
-  // Claude 6.1 Surrealist Landscape
-  await prisma.prompt.create({
-    data: {
-      text: "Create a surrealist masterpiece in the style of Salvador Dalí meets digital art. A vast desert landscape where the sand is made of flowing clock faces, all melting and dripping upward toward a sky filled with floating eyeballs that serve as moons. In the center, a massive elephant with impossibly long, spindly legs made of human arms walks toward the horizon. Its shadow on the ground shows a completely different creature — a whale. The color palette shifts from warm amber and ochre in the foreground to impossible greens and purples in the distance. Include hyper-detailed textures that reward close inspection while maintaining dream-logic coherence in the overall composition.",
-      slug: "claude-61-surrealist-landscape",
-      translations: {
-        create: {
-          language: 'en',
-          text: "Create a surrealist masterpiece in the style of Salvador Dalí meets digital art. A vast desert landscape where the sand is made of flowing clock faces, all melting and dripping upward toward a sky filled with floating eyeballs that serve as moons. In the center, a massive elephant with impossibly long, spindly legs made of human arms walks toward the horizon. Its shadow on the ground shows a completely different creature — a whale. The color palette shifts from warm amber and ochre in the foreground to impossible greens and purples in the distance. Include hyper-detailed textures that reward close inspection while maintaining dream-logic coherence in the overall composition.",
-        },
-      },
-    },
-  });
-  console.log('✓ Created prompt: claude-61-surrealist-landscape');
-
-
-  console.log('  Created 0 images for claude-61-surrealist-landscape');
-
   // Claude 6.2 Cyberpunk
   const prompt27 = await prisma.prompt.create({
     data: {
