@@ -43,6 +43,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 
 # local env files (IMPORTANT: Never commit these!)
+env
 .env
 .env*.local
 .env.local
